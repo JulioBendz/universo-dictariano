@@ -1,18 +1,15 @@
 {
   "name": "planet-three",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Proyecto 3D con Three.js y Vite",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "live-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "Proyecto 3D con Three.js y Vite",
   "dependencies": {
     "three": "^0.169.0"
   },
