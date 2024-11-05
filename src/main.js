@@ -11,12 +11,12 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Fondo espacial
-const spaceTexture = new THREE.TextureLoader().load('/assets/8k_stars_milky_way.jpg');
+const spaceTexture = new THREE.TextureLoader().load('/assets/2k_stars.jpg');
 scene.background = spaceTexture;
 
 // Crea la esfera (planeta) con la textura de la Tierra
 const planetTexture = new THREE.TextureLoader().load('/assets/earthx5400x2700.jpg');
-const planetGeometry = new THREE.SphereGeometry(1.5, 80, 80);
+const planetGeometry = new THREE.SphereGeometry(1, 32, 32);
 const planetMaterial = new THREE.MeshStandardMaterial({ map: planetTexture });
 const planet = new THREE.Mesh(planetGeometry, planetMaterial);
 scene.add(planet);
@@ -28,16 +28,15 @@ scene.add(planet);
 // Luz principal (simula el sol)
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5); // Aumenta la intensidad y el alcance
-directionalLight.position.set(10, 10, 10); // Ubica la luz en una posición lejana y diagonal al planeta
+directionalLight.position.set(3, 3, 3); // Ubica la luz en una posición lejana y diagonal al planeta
 scene.add(directionalLight);
 
 // Luz ambiental para rellenar sombras
-const ambientLight = new THREE.AmbientLight(0x404040, 0.4); // Luz suave en todo el ambiente
-scene.add(ambientLight);
+ const ambientLight = new THREE.AmbientLight(0x404040, 0.4); // Luz suave en todo el ambiente
+// scene.add(ambientLight);
 
-const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0x333333, 0.5); // Azul cielo y gris oscuro para el suelo
-scene.add(hemisphereLight);
-
+ const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0x333333, 0.9); // Azul cielo y gris oscuro para el suelo
+// scene.add(hemisphereLight);
 
 // Posición inicial de la cámara
 camera.position.z = 3;
