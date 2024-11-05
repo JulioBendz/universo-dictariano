@@ -1,0 +1,10 @@
+/* Quita márgenes del cuerpo para evitar espacio extra */
+body {
+    margin: 0;
+    overflow: hidden; /* Evita la aparición de barras de desplazamiento */
+}
+
+/* Elimina el espacio extra alrededor del canvas, mejorando el diseño */
+canvas {
+    display: block;
+}
