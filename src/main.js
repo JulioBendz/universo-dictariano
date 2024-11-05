@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-//import './main.js'; // Asegúrate de que las rutas sean correctas
+// import './main.js'; // Asegúrate de que las rutas sean correctas
 
-//import { Scene, PerspectiveCamera, WebGLRenderer, TextureLoader, SphereGeometry, MeshStandardMaterial, Mesh, PointLight } from 'three';
+// import { Scene, PerspectiveCamera, WebGLRenderer, TextureLoader, SphereGeometry, MeshStandardMaterial, Mesh, PointLight } from 'three';
 
 // Crea la escena, cámara y renderizador
 const scene = new THREE.Scene();
@@ -11,11 +11,11 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Fondo espacial
-const spaceTexture = new THREE.TextureLoader().load('/assets/2k_stars.jpg');
+const spaceTexture = new THREE.TextureLoader().load('./assets/2k_stars.jpg');
 scene.background = spaceTexture;
 
 // Crea la esfera (planeta) con la textura de la Tierra
-const planetTexture = new THREE.TextureLoader().load('/assets/earthx5400x2700.jpg');
+const planetTexture = new THREE.TextureLoader().load('./assets/earthx5400x2700.jpg');
 const planetGeometry = new THREE.SphereGeometry(1.5, 80, 80);
 const planetMaterial = new THREE.MeshStandardMaterial({ map: planetTexture });
 const planet = new THREE.Mesh(planetGeometry, planetMaterial);
