@@ -8,3 +8,23 @@ body {
 canvas {
     display: block;
 }
+
+body {
+    margin: 0;
+    height: 200vh; /* Simular una página larga */
+    overflow-y: scroll;
+    background: radial-gradient(#000, #001d3d);
+    color: white;
+}
+
+#content {
+    position: absolute;
+    top: 100vh;
+    text-align: center;
+    width: 100%;
+    color: white;
+}
+
+h1, p {
+    font-family: Arial, sans-serif;
+}

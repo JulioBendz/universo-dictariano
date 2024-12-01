@@ -215,3 +215,88 @@ window.addEventListener('resize', () => {
 // Iniciar la animación
 animate();
 
+const rockets = [];
+
+function createRocket(position) {
+    const rocketGroup = new THREE.Group();
+
+    // Cuerpo del cohete
+    const bodyGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 32);
+    const bodyMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+    const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+    rocketGroup.add(body);
+
+    // Nariz del cohete
+    const noseGeometry = new THREE.ConeGeometry(0.1, 0.3, 32);
+    const noseMaterial = new THREE.MeshStandardMaterial({ color: 0xffff00 });
+    const nose = new THREE.Mesh(noseGeometry, noseMaterial);
+    nose.position.y = 0.65;
+    rocketGroup.add(nose);
+
+    // Colas del cohete
+    const finGeometry = new THREE.BoxGeometry(0.05, 0.2, 0.05);
+    const finMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
+    for (let i = 0; i < 3; i++) {
+        const fin = new THREE.Mesh(finGeometry, finMaterial);
+        fin.position.set(
+            Math.cos((i * Math.PI * 2) / 3) * 0.2,
+            -0.5,
+            Math.sin((i * Math.PI * 2) / 3) * 0.2
+        );
+        fin.rotation.y = (i * Math.PI * 2) / 3;
+        rocketGroup.add(fin);
+    }
+
+    // Posicionar el cohete en el espacio
+    rocketGroup.position.set(position.x, position.y, position.z);
+    scene.add(rocketGroup);
+    rockets.push(rocketGroup);
+}
+
+// Crear 3 cohetes en posiciones diferentes
+createRocket({ x: -2, y: 0, z: -10 });
+createRocket({ x: 0, y: 0, z: -15 });
+createRocket({ x: 2, y: 0, z: -10 });
+
+let scrollY = 0;
+let maxScrollY = 2000; // Ajusta según la longitud de tu scroll
+
+window.addEventListener('scroll', () => {
+    scrollY = window.scrollY;
+
+    // Interpolación para alejar la cámara según el scroll
+    const progress = scrollY / maxScrollY; // Rango [0, 1]
+    camera.position.z = 3 + progress * 10; // Desde 3 hasta 13
+    camera.position.y = progress * -2; // Desplazar hacia abajo
+
+    // Opcional: Rotar o alejar el planeta
+    planet.rotation.y += progress * 0.01;
+
+    // Mostrar los cohetes gradualmente
+    rockets.forEach((rocket, index) => {
+        rocket.visible = scrollY > maxScrollY * (0.3 + index * 0.1); // Aparecen progresivamente
+    });
+});
+
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+
+window.addEventListener('click', (event) => {
+    // Convertir coordenadas del mouse a espacio normalizado
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Configurar raycaster
+    raycaster.setFromCamera(mouse, camera);
+
+    // Detectar intersecciones con los cohetes
+    const intersects = raycaster.intersectObjects(rockets, true);
+
+    if (intersects.length > 0) {
+        const clickedRocket = intersects[0].object;
+        console.log('Cohete clicado:', clickedRocket);
+
+        // Acción personalizada (redirigir, mover cámara, etc.)
+        camera.position.set(clickedRocket.position.x, clickedRocket.position.y, clickedRocket.position.z + 2);
+    }
+});
