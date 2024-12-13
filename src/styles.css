@@ -1,30 +1,26 @@
-/* Quita márgenes del cuerpo para evitar espacio extra */
 body {
     margin: 0;
-    overflow: hidden; /* Evita la aparición de barras de desplazamiento */
+    overflow: auto;
+    height: 200vh; /* Doble altura de la pantalla */
 }
-
-/* Elimina el espacio extra alrededor del canvas, mejorando el diseño */
 canvas {
-    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
-
-body {
-    margin: 0;
-    height: 200vh; /* Simular una página larga */
-    overflow-y: scroll;
-    background: radial-gradient(#000, #001d3d);
-    color: white;
-}
-
-#content {
-    position: absolute;
-    top: 100vh;
-    text-align: center;
+.section {
     width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
     color: white;
+    z-index: 1;
 }
-
-h1, p {
-    font-family: Arial, sans-serif;
+.section:nth-child(odd) {
+    background: #1a1a1a;
+}
+.section:nth-child(even) {
+    background: #333;
 }

@@ -186,35 +186,6 @@ function animateParticles() {
     });
 }
 
-
-
-// Animación general
-function animate() {
-    requestAnimationFrame(animate);
-
-    // Rotación del planeta
-    planet.rotation.y += 0.004;
-
-    // Animar el platillo y la estrella fugaz
-    animateUFO();
-    animateShootingStar();
-    animateParticles();
-
-    renderer.render(scene, camera);
-}
-
-// Ajustar tamaño del renderizador
-window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-});
-
-// Iniciar la animación
-animate();
-
 const rockets = [];
 
 function createRocket(position) {
@@ -254,9 +225,11 @@ function createRocket(position) {
 }
 
 // Crear 3 cohetes en posiciones diferentes
-createRocket({ x: -2, y: 0, z: -10 });
-createRocket({ x: 0, y: 0, z: -15 });
-createRocket({ x: 2, y: 0, z: -10 });
+// Crear cohetes en posiciones más cercanas (por delante del planeta)
+createRocket({ x: -1.5, y: -0.8, z: 5 });
+createRocket({ x: 0, y: -0.8, z: 5 });
+createRocket({ x: 1.5, y: -0.8, z: 5 });
+
 
 let scrollY = 0;
 let maxScrollY = 2000; // Ajusta según la longitud de tu scroll
@@ -275,6 +248,8 @@ window.addEventListener('scroll', () => {
     // Mostrar los cohetes gradualmente
     rockets.forEach((rocket, index) => {
         rocket.visible = scrollY > maxScrollY * (0.3 + index * 0.1); // Aparecen progresivamente
+        rocket.visible = scrollY > appearThreshold; // Aparecen progresivamente
+
     });
 });
 
@@ -300,3 +275,31 @@ window.addEventListener('click', (event) => {
         camera.position.set(clickedRocket.position.x, clickedRocket.position.y, clickedRocket.position.z + 2);
     }
 });
+
+
+// Animación general
+function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotación del planeta
+    planet.rotation.y += 0.004;
+
+    // Animar el platillo y la estrella fugaz
+    animateUFO();
+    animateShootingStar();
+    animateParticles();
+
+    renderer.render(scene, camera);
+}
+
+// Ajustar tamaño del renderizador
+window.addEventListener('resize', () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+});
+
+// Iniciar la animación
+animate();
